@@ -8,7 +8,13 @@
         android:id="@+id/inn_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Введите ИНН" />
+        android:hint="Введите ИНН-1" />
+
+    <EditText
+        android:id="@+id/inn_input2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Введите ИНН-2" />
 
     <Button
         android:id="@+id/search_button"
@@ -22,7 +28,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Результат"
+        android:text="Результат-1"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/result_text2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Результат-2"
         android:textSize="18sp" />
 
 </LinearLayout>

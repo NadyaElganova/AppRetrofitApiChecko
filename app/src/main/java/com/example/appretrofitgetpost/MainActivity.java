@@ -28,7 +28,9 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private EditText innInput;
+    private EditText innInput2;
     private TextView resultText;
+    private TextView resultText2;
     private Button searchButton;
 
     private final String API_KEY = "qEU8F2ba7rt2BBQ6";
@@ -41,23 +43,31 @@ public class MainActivity extends AppCompatActivity {
 
         innInput = findViewById(R.id.inn_input);
         resultText = findViewById(R.id.result_text);
+        innInput2 = findViewById(R.id.inn_input2);
+        resultText2 = findViewById(R.id.result_text2);
         searchButton = findViewById(R.id.search_button);
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String inn = innInput.getText().toString().trim();
-                if (!inn.isEmpty()) {
-                    fetchCompanyInfo(inn);
+                String inn1 = innInput.getText().toString().trim();
+                String inn2 = innInput2.getText().toString().trim();
+
+                if (!inn1.isEmpty()) {
+                    fetchCompanyInfo(inn1, resultText);
                 } else {
-                    Toast.makeText(MainActivity.this, "Введите ИНН", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Введите первый ИНН", Toast.LENGTH_SHORT).show();
+                }
+
+                if (!inn2.isEmpty()) {
+                    fetchCompanyInfo(inn2, resultText2);
                 }
             }
         });
     }
 
 
-    private void fetchCompanyInfo(String inn) {
+    private void fetchCompanyInfo(String inn, TextView resultView) {
         CheckoApiService apiService = RetrofitClient.getApiService();
         Call<CompanyInfo> call = apiService.getCompanyInfo(API_KEY, inn);
 
@@ -73,15 +83,15 @@ public class MainActivity extends AppCompatActivity {
                             "ОГРН: " + companyData.getOGRN() + "\n" +
                             "КПП: " + companyData.getKPP() + "\n\n" +
                             "Статус: " + companyMeta.getStatus() + "\n";
-                    resultText.setText(result);
+                    resultView.setText(result);
                 } else {
-                    resultText.setText("Компания не найдена");
+                    resultView.setText("Компания не найдена");
                 }
             }
 
             @Override
             public void onFailure(Call<CompanyInfo> call, Throwable t) {
-                resultText.setText("Ошибка: " + t.getMessage());
+                resultView.setText("Ошибка: " + t.getMessage());
             }
         });
     }
